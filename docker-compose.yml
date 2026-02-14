@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # 后端API服务
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dicom-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      # 挂载NAS目录（需要根据实际路径修改）
+      # - /path/to/nas/dicom1:/data/nas/dicom1
+      # - /path/to/nas/dicom2:/data/nas/dicom2
+    environment:
+      - DATABASE_URL=sqlite:///app/data/dicom.db
+    restart: unless-stopped
+
+  # 前端Web服务
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: dicom-web
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+# 网络
+networks:
+  default:
+    name: dicom-network
