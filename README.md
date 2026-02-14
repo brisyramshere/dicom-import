@@ -11,7 +11,7 @@
 
 ## 快速开始
 
-### 1. 启动服务
+### 方式一：Docker部署（推荐）
 
 ```bash
 # 构建并启动所有服务
@@ -21,7 +21,34 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-### 2. 访问界面
+### 方式二：本地部署
+
+#### 后端
+
+```bash
+# 安装依赖
+pip install -r requirements.txt
+
+# 启动后端
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+#### 前端
+
+```bash
+cd frontend
+
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 或构建生产版本
+npm run build
+```
+
+### 访问界面
 
 - 前端: http://localhost:3000
 - API文档: http://localhost:8000/docs
